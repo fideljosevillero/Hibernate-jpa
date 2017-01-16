@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ public class Empleado implements Serializable {
 	
 	@Id
 	@Column(name="cod_empleado")
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigo;
 	
 	@Column(name="nombre")
@@ -66,6 +68,8 @@ public class Empleado implements Serializable {
 
 	@Override
 	public String toString() {
+		System.out.println("Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
+				+ fechaNacimiento + "]");
 		return "Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
 				+ fechaNacimiento + "]";
 	}
