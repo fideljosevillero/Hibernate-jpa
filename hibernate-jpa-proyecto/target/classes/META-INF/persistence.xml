@@ -7,20 +7,22 @@
 <!-- Gestor de persistencia llamado 'mi_persistencia' -->
   <persistence-unit name="mi_persistencia">
   <provider>org.hibernate.ejb.HibernatePersistence</provider>
+<!-- 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> -->
   
     <!-- se colocan las clases con anotaciones JPA, para persistir la info -->
     <class>com.fidel.hibernate.modelo.Empleado</class>
   
     <properties>
-        <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 <!--         <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/test" /> -->
-		<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />
-        <property name="javax.persistence.jdbc.user" value="sa" />
-        <property name="javax.persistence.jdbc.password" value="" />
+		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql2?createDatabaseIfNotExist=true" />
+        <property name="javax.persistence.jdbc.user" value="root" />
+        <property name="javax.persistence.jdbc.password" value="1234567" />
         
-        <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-        <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-<!-- 		<property name="hibernate.hbm2ddl.auto" value="create" /> -->
+<!--         <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" /> -->
+		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+<!--         <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+		<property name="hibernate.hbm2ddl.auto" value="create" />
 <!-- 	MAS SEGURO PARA MONTAR EN PRODUCCIÓN -->
 <!--         <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
 <!-- 		<property name="hibernate.hbm2ddl.auto" value="update" /> -->
