@@ -19,30 +19,25 @@ public class CRUDEmpleado {
 	public static void main(String[] args) {
 		guardarEmpleado();
 		
-//		// buscar Empleado
-//		Empleado emp = buscarEmpleado(1L);
-//		System.out.println("--- "+emp);
-//		//emp.toString();
+		// buscar Empleado
+		Empleado emp = buscarEmpleado(1L);
+		emp.toString();
 //		
-//		// Eliminar empplado
-////		if(removeEmpleado(2L)){
-////			System.out.println("Elemento eliminado satisfactoriamente !!!");
-////		}else{
-////			System.out.println("Error al intentar borrar el elemento!!!");
-////		}
-//		
-//		imprimir();
+		// Eliminar empleado
+		if(removeEmpleado(3L)){
+			System.out.println("Elemento eliminado satisfactoriamente !!!");
+		}else{
+			System.out.println("No se pudo borrar el elemento!!!");
+		}
+		
+		imprimir();
 	}
 	
 	public static boolean guardarEmpleado(){
 		EntityManager manager;
-		System.out.println("1");
 		EntityManagerFactory emf;
-		System.out.println("2");
 		emf = Persistence.createEntityManagerFactory("mi_persistencia");
-		System.out.println("3");
 		manager = emf.createEntityManager();
-		System.out.println("4");
 		try{			
 			//Empleado e = new Empleado(1L, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
 			Empleado e = new Empleado(null, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
@@ -54,16 +49,12 @@ public class CRUDEmpleado {
 			manager.persist(e2);
 			manager.getTransaction().commit();
 			e.setNombre("segundo nombre");
-			
-			
-			
-			
-			//manager.close();
+			manager.close();
 			return true;
 		}catch(Exception er){
 			System.out.println("error "+er.toString());
 			manager.getTransaction().rollback();
-			//manager.close();
+			manager.close();
 			return false;
 		}
 	}
@@ -77,6 +68,7 @@ public class CRUDEmpleado {
 		for (Empleado emp : lista) {
 			emp.toString();
 		}
+		manager.close();
 	}
 
 	public static Empleado buscarEmpleado(Long id){
@@ -84,33 +76,39 @@ public class CRUDEmpleado {
 		EntityManager manager = emf.createEntityManager();
 		Empleado emp = new Empleado();
 		try{
-			emf = Persistence.createEntityManagerFactory("mi_persistencia");
-			manager = emf.createEntityManager();
 			manager.getTransaction().begin();
 			emp = manager.find(Empleado.class, id);
 			manager.getTransaction().commit();
-			//manager.close();
+			System.out.println("=== "+emp);
+			manager.close();
 		}catch(Exception er){
-			System.out.println("");
+			manager.getTransaction().rollback();
+			manager.close();
+			System.out.println("error en buscarEmpleado "+er.toString());
 		}
 		return emp;
 	}
 	
-//	public static boolean removeEmpleado(Long id){
-//		try{
-//			emf = Persistence.createEntityManagerFactory("mi_persistencia");
-//			manager = emf.createEntityManager();
-//			
-//			manager.getTransaction().begin();
-//			Empleado emp = buscarEmpleado(id, manager);
-//			manager.remove(emp);
-//			manager.getTransaction().commit();
-//			manager.close();
-//			return true;
-//		}catch(Exception er){
-//			System.out.println("error al eliminar "+er.toString());
-//			return false;
-//		}
-//	}
+	public static boolean removeEmpleado(Long id){
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("mi_persistencia");
+		EntityManager manager = emf.createEntityManager();
+		try{			
+			manager.getTransaction().begin();
+			Empleado emp = buscarEmpleado(id);
+			if(emp == null){
+				return false;
+			}
+			emp = manager.merge(emp);
+			manager.remove(emp);
+			manager.getTransaction().commit();
+			manager.close();
+			return true;
+		}catch(Exception er){
+			System.out.println("error al eliminar "+er.toString());
+			manager.getTransaction().rollback();
+			manager.close();
+			return false;
+		}
+	}
 	
 }
