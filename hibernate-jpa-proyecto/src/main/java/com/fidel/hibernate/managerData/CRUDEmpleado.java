@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 //import javax.persistence.PersistenceContext;
 
+import com.fidel.hibernate.modelo.Direccion;
 import com.fidel.hibernate.modelo.Empleado;
 
 public class CRUDEmpleado {
@@ -20,15 +21,15 @@ public class CRUDEmpleado {
 		guardarEmpleado();
 		
 		// buscar Empleado
-		Empleado emp = buscarEmpleado(1L);
-		emp.toString();
-//		
+//		Empleado emp = buscarEmpleado(6L);
+//		emp.toString();
+		
 		// Eliminar empleado
-		if(removeEmpleado(3L)){
-			System.out.println("Elemento eliminado satisfactoriamente !!!");
-		}else{
-			System.out.println("No se pudo borrar el elemento!!!");
-		}
+//		if(removeEmpleado(3L)){
+//			System.out.println("Elemento eliminado satisfactoriamente !!!");
+//		}else{
+//			System.out.println("No se pudo borrar el elemento!!!");
+//		}
 		
 		imprimir();
 	}
@@ -39,14 +40,11 @@ public class CRUDEmpleado {
 		emf = Persistence.createEntityManagerFactory("mi_persistencia");
 		manager = emf.createEntityManager();
 		try{			
-			//Empleado e = new Empleado(1L, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
-			Empleado e = new Empleado(null, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
-			Empleado e1 = new Empleado(null, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
-			Empleado e2 = new Empleado(null, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime());
+			Empleado e = new Empleado(null, "Fidel", "Villero", new GregorianCalendar(1985, 8, 17).getTime(), 
+										new Direccion(null, "Tolú", "Sucre", "Colombia"));
+			
 			manager.getTransaction().begin();
 			manager.persist(e);
-			manager.persist(e1);
-			manager.persist(e2);
 			manager.getTransaction().commit();
 			e.setNombre("segundo nombre");
 			manager.close();
@@ -76,6 +74,7 @@ public class CRUDEmpleado {
 		EntityManager manager = emf.createEntityManager();
 		Empleado emp = new Empleado();
 		try{
+			System.out.println("1");
 			manager.getTransaction().begin();
 			emp = manager.find(Empleado.class, id);
 			manager.getTransaction().commit();

@@ -3,6 +3,7 @@ package com.fidel.hibernate.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.GenerationType;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -32,15 +35,22 @@ public class Empleado implements Serializable {
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="id_direccion")
+	private Direccion direccion;
+
 	public Empleado(){}
 	
-	public Empleado(Long codigo, String nombre, String apellido, Date fechaNacimiento) {
+	public Empleado(Long codigo, String nombre, String apellido, Date fechaNacimiento, Direccion direccion) {
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
+		this.direccion = direccion;
 	}
-	
+
+
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -65,13 +75,22 @@ public class Empleado implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
 
 	@Override
 	public String toString() {
 		System.out.println("Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
-				+ fechaNacimiento + "]");
+				+ fechaNacimiento + ", direccion=" + direccion + "]");
 		return "Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
-				+ fechaNacimiento + "]";
+				+ fechaNacimiento + ", direccion=" + direccion + "]";
 	}
+
+	
 	
 }
