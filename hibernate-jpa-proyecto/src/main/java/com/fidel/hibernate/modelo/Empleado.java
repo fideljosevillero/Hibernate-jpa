@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 //import javax.persistence.GeneratedValue;
@@ -16,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EMPLEADO")
 public class Empleado implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,12 +35,12 @@ public class Empleado implements Serializable {
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id_direccion")
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="direccion_id")
 	private Direccion direccion;
-
-	public Empleado(){}
 	
+	public Empleado(){}
+
 	public Empleado(Long codigo, String nombre, String apellido, Date fechaNacimiento, Direccion direccion) {
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -49,8 +49,12 @@ public class Empleado implements Serializable {
 		this.direccion = direccion;
 	}
 
-
-
+	public Direccion getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -75,20 +79,13 @@ public class Empleado implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public Direccion getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
-	}
 
 	@Override
 	public String toString() {
 		System.out.println("Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
-				+ fechaNacimiento + ", direccion=" + direccion + "]");
+				+ fechaNacimiento + "]");
 		return "Empleado [codigo=" + codigo + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento="
-				+ fechaNacimiento + ", direccion=" + direccion + "]";
+				+ fechaNacimiento + "]";
 	}
 
 	

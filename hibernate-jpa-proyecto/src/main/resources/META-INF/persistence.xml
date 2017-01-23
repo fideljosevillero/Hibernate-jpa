@@ -11,10 +11,14 @@
   
     <!-- se colocan las clases con anotaciones JPA, para persistir la info -->
     <class>com.fidel.hibernate.modelo.Empleado</class>
+    <class>com.fidel.hibernate.modelo.Direccion</class>
+    <class>com.fidel.hibernate.modelo.Autor</class>
+    <class>com.fidel.hibernate.modelo.Libro</class>
   
     <properties>
         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 <!--         <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/test" /> -->
+<!--         <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/Desktop/Empresa" /> -->
 		<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_hibernate?createDatabaseIfNotExist=true" />
         <property name="javax.persistence.jdbc.user" value="root" />
         <property name="javax.persistence.jdbc.password" value="1234567" />
@@ -25,12 +29,12 @@
                 
 <!-- 		<property name="hibernate.hbm2ddl.auto" value="update" /> -->
 <!-- 	MAS SEGURO PARA MONTAR EN PRODUCCIÓN -->
-        <property name="hibernate.hbm2ddl.auto" value="validate" />
-<!-- 		<property name="hibernate.hbm2ddl.auto" value="update" /> -->
+<!--         <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+		<property name="hibernate.hbm2ddl.auto" value="update" />
 
-		<property name="show_sql" value="true" />
-        <property name="format_sql" value="true" />
-        <property name="use_sql_comments" value="true" />
+<!-- 		<property name="show_sql" value="true" /> -->
+<!--         <property name="format_sql" value="true" /> -->
+<!--         <property name="use_sql_comments" value="true" /> -->
     </properties>
   </persistence-unit>
 
